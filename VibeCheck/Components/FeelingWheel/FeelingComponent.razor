@@ -1,0 +1,30 @@
+﻿<div class="feeling"  style="@_style" @onclick="SelectFeeling">
+    <span>@Feeling.Name</span>
+</div>
+
+@code {
+    [Parameter] public FeelingModel Feeling { get; set; } = new("", "", null);
+    [Parameter] public int Index { get; set; }
+    [Parameter] public double Ratio { get; set; }
+    
+    private string _style { get; set; } = "";
+
+    protected override void OnInitialized()
+    {
+        var totalSlices = 5;
+        var rotation = 360 * Index / totalSlices;
+
+        _style = $"background-color: {Feeling.Color}; "
+            + $"transform: rotate({rotation}deg); "
+            + $"width: {PixelWidth(100)}px; ";
+        
+        double PixelWidth(int pixelHeight) => Math.Abs(2 * pixelHeight * Math.Tan(DegToRad(180 * Ratio)));
+        double DegToRad(double deg) => deg * Math.PI / 180;
+    }
+    
+    private void SelectFeeling()
+    {
+        // Logic for when the feeling is selected
+        Console.WriteLine($"You selected: {Feeling}");
+    }
+}

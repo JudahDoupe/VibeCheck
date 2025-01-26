@@ -1,0 +1,17 @@
+﻿<div class="feelings-wheel">
+    @foreach (var feeling in _feelings)
+    {
+        <FeelingComponent Feeling="feeling" Index="_feelings.IndexOf(feeling)" Ratio="1/5.0"/>
+    }
+</div>
+
+@code {
+    private List<FeelingModel> _feelings =  new()
+    {
+        new("Anger", "#ff595e", null),
+        new("Fear", "#ffca3a", null),
+        new("Sad", "#8ac926", null),
+        new("Disgust", "#1982c4", null),
+        new("Happy", "#6a4c93", null),
+    };
+}
