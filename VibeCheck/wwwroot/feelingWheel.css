@@ -15,15 +15,6 @@
 .feeling {
     position: absolute;
     width: 100px; 
-    height: 100px;  /* Radial length */
-    transform-origin: 50% 0%; /* Pivot point for rotation */
-    clip-path: polygon(0% 100%, 100% 100%, 50% 0%); /* Making a segment-like shape */
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 50%; /* Rounded corners for the segment */
+    height: 100px;
+    border-radius: 50%;
 }

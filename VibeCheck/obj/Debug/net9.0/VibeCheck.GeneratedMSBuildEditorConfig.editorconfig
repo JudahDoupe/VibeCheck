@@ -32,6 +32,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xGZWVsaW5nV2hlZWxcRmVlbGluZ3NXaGVlbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/_Projects/VibeCheck/VibeCheck/Components/FeelingWheel/PathFeeling.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xGZWVsaW5nV2hlZWxcUGF0aEZlZWxpbmcucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/_Projects/VibeCheck/VibeCheck/Components/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

@@ -1,8 +1,12 @@
-﻿<div class="feelings-wheel">
+﻿<div >
     @foreach (var feeling in _feelings)
     {
-        <FeelingComponent Feeling="feeling" Index="_feelings.IndexOf(feeling)" Ratio="1/5.0"/>
     }
+        <PathFeeling Feeling="_feelings[0]" Ratio="0.2"/>
+        <PathFeeling Feeling="_feelings[1]" Ratio="0.4"/>
+        <PathFeeling Feeling="_feelings[2]" Ratio="0.6"/>
+        <PathFeeling Feeling="_feelings[3]" Ratio="0.8"/>
+        <PathFeeling Feeling="_feelings[4]" Ratio="0.9"/>
 </div>
 
 @code {

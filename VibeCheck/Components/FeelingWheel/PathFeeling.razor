@@ -1,0 +1,56 @@
+﻿<svg style="width: @(_radius*2)px; height: @(_radius*2)px;">
+    <path style="fill: @Feeling.Color" d="@GeneratePath()"></path>
+</svg>
+@code {
+    [Parameter] public FeelingModel Feeling { get; set; } = new("", "", null);
+    [Parameter] public double Ratio { get; set; }
+
+    private int _radius = 100;
+    
+    protected override void OnInitialized()
+    {
+        
+    }
+
+    private string GeneratePath()
+    {
+        
+        var pathEndX = _radius + _radius * Math.Sin(Ratio * 2 * Double.Pi);
+        var pathEndY = _radius - _radius * Math.Cos(Ratio * 2 * Double.Pi);
+        var end = $"{pathEndX},{pathEndY}";
+
+        var center = $"{_radius},{_radius}";
+        var top = $"{_radius},0";
+        var right = $"{2*_radius},{_radius}";
+        var bottom = $"{_radius},{2*_radius}";
+        var left = $"0,{_radius}";
+
+        var path = $"M{center} L{top} ";
+        if (Ratio <= 0.25)
+        {
+            path += $"A{center} 1 0,1 {end} ";
+        }
+        else if (Ratio <= 0.5)
+        {
+            path += $"A{center} 1 0,1 {right} ";
+            path += $"A{center} 1 0,1 {end} ";
+        }
+        else if (Ratio <= 0.75)
+        {
+            path += $"A{center} 1 0,1 {right} ";
+            path += $"A{center} 1 0,1 {bottom} ";
+            path += $"A{center} 1 0,1 {end} ";
+        }
+        else
+        {
+            path += $"A{center} 1 0,1 {right} ";
+            path += $"A{center} 1 0,1 {bottom} ";
+            path += $"A{center} 1 0,1 {left} ";
+            path += $"A{center} 1 0,1 {end} ";
+        }
+
+        path += "z";
+        
+        return path ;
+    }
+}
