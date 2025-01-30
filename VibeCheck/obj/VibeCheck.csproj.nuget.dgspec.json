@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\_Projects\\VibeCheck\\VibeCheck\\VibeCheck.csproj": {}
+    "C:\\Projects\\VibeCheck\\VibeCheck\\VibeCheck.csproj": {}
   },
   "projects": {
-    "C:\\_Projects\\VibeCheck\\VibeCheck\\VibeCheck.csproj": {
+    "C:\\Projects\\VibeCheck\\VibeCheck\\VibeCheck.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\_Projects\\VibeCheck\\VibeCheck\\VibeCheck.csproj",
+        "projectUniqueName": "C:\\Projects\\VibeCheck\\VibeCheck\\VibeCheck.csproj",
         "projectName": "VibeCheck",
-        "projectPath": "C:\\_Projects\\VibeCheck\\VibeCheck\\VibeCheck.csproj",
-        "packagesPath": "C:\\Users\\judah\\.nuget\\packages\\",
-        "outputPath": "C:\\_Projects\\VibeCheck\\VibeCheck\\obj\\",
+        "projectPath": "C:\\Projects\\VibeCheck\\VibeCheck\\VibeCheck.csproj",
+        "packagesPath": "C:\\Users\\jjdoupe\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\VibeCheck\\VibeCheck\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\judah\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\jjdoupe\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"

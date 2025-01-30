@@ -1,21 +1,32 @@
-﻿<div >
+﻿<div class="feelings-wheel">
     @foreach (var feeling in _feelings)
     {
+        <PrimaryEmotionTile Feeling="feeling" Tile="_tiles[feeling.Name]"/>
     }
-        <PathFeeling Feeling="_feelings[0]" Ratio="0.2"/>
-        <PathFeeling Feeling="_feelings[1]" Ratio="0.4"/>
-        <PathFeeling Feeling="_feelings[2]" Ratio="0.6"/>
-        <PathFeeling Feeling="_feelings[3]" Ratio="0.8"/>
-        <PathFeeling Feeling="_feelings[4]" Ratio="0.9"/>
 </div>
 
 @code {
-    private List<FeelingModel> _feelings =  new()
+
+    private List<FeelingModel> _feelings = new()
     {
-        new("Anger", "#ff595e", null),
-        new("Fear", "#ffca3a", null),
-        new("Sad", "#8ac926", null),
-        new("Disgust", "#1982c4", null),
-        new("Happy", "#6a4c93", null),
+        new("Anger", null),
+        new("Fear", null),
+        new("Sad", null),
+        new("Disgust", null),
+        new("Happy", null),
     };
+
+    static double primaryInnerRadius = 25;
+    static double primaryOuterRadius = 100;
+    
+    
+    private Dictionary<string, FeelingTileModel> _tiles = new()
+    {
+        { "Anger", new FeelingTileModel(Angle.FromRatio(0), Angle.FromRatio(0.3), primaryInnerRadius, primaryOuterRadius, "#ff595e") },
+        { "Fear", new FeelingTileModel(Angle.FromRatio(0.3), Angle.FromRatio(0.5), primaryInnerRadius, primaryOuterRadius, "#ffca3a") },
+        { "Sad", new FeelingTileModel(Angle.FromRatio(0.5), Angle.FromRatio(0.7), primaryInnerRadius, primaryOuterRadius, "#8ac926") },
+        { "Disgust", new FeelingTileModel(Angle.FromRatio(0.7), Angle.FromRatio(0.8), primaryInnerRadius, primaryOuterRadius, "#1982c4") },
+        { "Happy", new FeelingTileModel(Angle.FromRatio(0.8), Angle.FromRatio(1), primaryInnerRadius, primaryOuterRadius, "#6a4c93") },
+    };
+
 }

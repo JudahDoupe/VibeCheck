@@ -1,0 +1,19 @@
+﻿<div class="feeling">
+    <svg style="width: @(_radius*2)px; height: @(_radius*2)px;">
+        <path style="fill: @Tile.Color" d="@Tile.GeneratePath()">
+        </path>
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">@Feeling.Name</text>
+    </svg>
+</div>
+
+@code {
+    [Parameter] public FeelingModel Feeling { get; set; } = new("",  null);
+    [Parameter] public FeelingTileModel Tile { get; set; } = new(Angle.FromDregrees(0), Angle.FromDregrees(0), 0,0,"");
+
+    private int _radius = 100;
+    
+    protected override void OnInitialized()
+    {
+        
+    }
+}
