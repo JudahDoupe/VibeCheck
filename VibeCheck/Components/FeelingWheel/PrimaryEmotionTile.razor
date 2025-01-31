@@ -1,8 +1,12 @@
 ﻿<div class="feeling">
     <svg style="width: @(_radius*2)px; height: @(_radius*2)px;">
-        <path style="fill: @Tile.Color" d="@Tile.GeneratePath()">
+        <path style="fill: @Tile.Color" d="@GeneratePath()">
         </path>
-            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">@Feeling.Name</text>
+        <text textLength="@Tile.Length"
+              Fill="white" font-size="12"
+              transform="translate(@SvgCenter.ToSvg()) rotate(@TextRotation.Degree)">
+            @Feeling.Name
+        </text>
     </svg>
 </div>
 
@@ -10,10 +14,39 @@
     [Parameter] public FeelingModel Feeling { get; set; } = new("",  null);
     [Parameter] public FeelingTileModel Tile { get; set; } = new(Angle.FromDregrees(0), Angle.FromDregrees(0), 0,0,"");
 
+    public Angle TextRotation { get; private set; }
+    public Point2D TextStartPosition { get;private set; }
+    public Point2D SvgCenter { get;private set; }
+    
     private int _radius = 100;
     
     protected override void OnInitialized()
     {
+        SvgCenter = new Point2D(Tile.OuterRadius, Tile.OuterRadius);
+        TextRotation = Angle.FromRatio(((Tile.Start.Ratio + Tile.End.Ratio) / 2.0) - 0.25).Inverse();
+        TextStartPosition = TextRotation.Project(Tile.InnerRadius).Add(SvgCenter);
+    }
+    
+    public string GeneratePath()
+    {
+        var start = Tile.Start;
+        var end = Tile.End;
+        var innerRadius = Tile.InnerRadius;
+        var outerRadius = Tile.OuterRadius;
+        var innerStart = start.Project(innerRadius).Add(outerRadius, outerRadius).ToSvg();
+        var outerStart = start.Project(outerRadius).Add(outerRadius, outerRadius).ToSvg();
+        var innerEnd =end.Project(innerRadius).Add(outerRadius,outerRadius).ToSvg();
+        var outerEnd =end.Project(outerRadius).Add(outerRadius,outerRadius).ToSvg();
+        var innerSvgRadius = $"{innerRadius},{innerRadius}";
+        var outerSvgRadius = $"{outerRadius},{outerRadius}";
+
+        var path = $"M{innerStart} ";
+        path += $"L{outerStart} ";
+        path += $"A{outerSvgRadius} 1 0 0 {outerEnd} ";
+        path += $"L{innerEnd} ";
+        path += $"A{innerSvgRadius} 1 0 1 {innerStart} ";
+        path += "z";
         
+        return path;
     }
 }
