@@ -2,9 +2,13 @@
     <svg style="width: @(_radius*2)px; height: @(_radius*2)px;">
         <path style="fill: @Tile.Color" d="@GeneratePath()">
         </path>
-        <text textLength="@Tile.Length"
-              Fill="white" font-size="12"
-              transform="translate(@SvgCenter.ToSvg()) rotate(@TextRotation.Degree)">
+        <text Fill="white" 
+              font-size="15"
+              text-anchor="middle"
+              transform="translate(@SvgCenter.ToSvg()) 
+                        rotate(@TextRotation.Degree) 
+                        translate(@_midRadius ,@(_flip ? -5 : 5)) 
+                        rotate(@(_flip ? 180 : 0))">
             @Feeling.Name
         </text>
     </svg>
@@ -15,16 +19,18 @@
     [Parameter] public FeelingTileModel Tile { get; set; } = new(Angle.FromDregrees(0), Angle.FromDregrees(0), 0,0,"");
 
     public Angle TextRotation { get; private set; }
-    public Point2D TextStartPosition { get;private set; }
-    public Point2D SvgCenter { get;private set; }
-    
+    public Point2D SvgCenter { get; private set; }
+    public Angle MirrorAdjustment { get; private set; }
+
+    private bool _flip => 90 < TextRotation.Degree && TextRotation.Degree < 270;
     private int _radius = 100;
+    private double _midRadius => (Tile.InnerRadius + Tile.OuterRadius) / 2.0;
     
     protected override void OnInitialized()
     {
         SvgCenter = new Point2D(Tile.OuterRadius, Tile.OuterRadius);
         TextRotation = Angle.FromRatio(((Tile.Start.Ratio + Tile.End.Ratio) / 2.0) - 0.25).Inverse();
-        TextStartPosition = TextRotation.Project(Tile.InnerRadius).Add(SvgCenter);
+        MirrorAdjustment = Angle.FromDregrees(TextRotation.Degree > 180 ? 180 : 0);
     }
     
     public string GeneratePath()
