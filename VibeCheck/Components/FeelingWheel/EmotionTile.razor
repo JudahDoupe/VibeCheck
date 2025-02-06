@@ -1,5 +1,5 @@
 ﻿<div class="feeling">
-    <svg style="width: @(_radius*2)px; height: @(_radius*2)px;">
+    <svg style="width: @(size)px; height: @(size)px;">
         <path style="fill: @Tile.Color" d="@GeneratePath()">
         </path>
         <text Fill="white" 
@@ -20,17 +20,15 @@
 
     public Angle TextRotation { get; private set; }
     public Point2D SvgCenter { get; private set; }
-    public Angle MirrorAdjustment { get; private set; }
 
-    private bool _flip => 90 < TextRotation.Degree && TextRotation.Degree < 270;
-    private int _radius = 100;
+    private bool _flip => TextRotation.Degree is > 90 and < 270;
+    private double size => Tile.OuterRadius * 2;
     private double _midRadius => (Tile.InnerRadius + Tile.OuterRadius) / 2.0;
     
     protected override void OnInitialized()
     {
         SvgCenter = new Point2D(Tile.OuterRadius, Tile.OuterRadius);
         TextRotation = Angle.FromRatio(((Tile.Start.Ratio + Tile.End.Ratio) / 2.0) - 0.25).Inverse();
-        MirrorAdjustment = Angle.FromDregrees(TextRotation.Degree > 180 ? 180 : 0);
     }
     
     public string GeneratePath()

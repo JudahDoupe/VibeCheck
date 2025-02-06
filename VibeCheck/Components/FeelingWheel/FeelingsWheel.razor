@@ -1,7 +1,7 @@
 ﻿<div class="feelings-wheel">
     @foreach (var feeling in _feelings)
     {
-        <PrimaryEmotionTile Feeling="feeling" Tile="_tiles[feeling.Name]"/>
+        <EmotionTile Feeling="feeling" Tile="_tiles[feeling.Name]"/>
     }
 </div>
 
@@ -14,19 +14,27 @@
         new("Disgust", null),
         new("Sad", null),
         new("Fear", null),
+        new("Frustrated", "Anger"),
+        new("Aggressive", "Anger"),
     };
 
-    static double primaryInnerRadius = 25;
-    static double primaryOuterRadius = 100;
+    static double radius1 = 25;
+    static double radius2 = 100;
+    static double radius3 = 200;
+    static double radius4 = 300;
     
+    //1. build the tree of feelings
+    //2. calculate the angles and radius of the tile
     
     private Dictionary<string, FeelingTileModel> _tiles = new()
     {
-        { "Anger", new FeelingTileModel(Angle.FromRatio(0), Angle.FromRatio(0.3), primaryInnerRadius, primaryOuterRadius, "#ff595e") },
-        { "Happy", new FeelingTileModel(Angle.FromRatio(0.3), Angle.FromRatio(0.5), primaryInnerRadius, primaryOuterRadius, "#ffca3a") },
-        { "Disgust", new FeelingTileModel(Angle.FromRatio(0.5), Angle.FromRatio(0.7), primaryInnerRadius, primaryOuterRadius, "#8ac926") },
-        { "Sad", new FeelingTileModel(Angle.FromRatio(0.7), Angle.FromRatio(0.8), primaryInnerRadius, primaryOuterRadius, "#1982c4") },
-        { "Fear", new FeelingTileModel(Angle.FromRatio(0.8), Angle.FromRatio(1), primaryInnerRadius, primaryOuterRadius, "#6a4c93") },
+        { "Anger", new FeelingTileModel(Angle.FromRatio(0), Angle.FromRatio(0.3), radius1, radius2, "#ff595e") },
+        { "Happy", new FeelingTileModel(Angle.FromRatio(0.3), Angle.FromRatio(0.5), radius1, radius2, "#ffca3a") },
+        { "Disgust", new FeelingTileModel(Angle.FromRatio(0.5), Angle.FromRatio(0.7), radius1, radius2, "#8ac926") },
+        { "Sad", new FeelingTileModel(Angle.FromRatio(0.7), Angle.FromRatio(0.8), radius1, radius2, "#1982c4") },
+        { "Fear", new FeelingTileModel(Angle.FromRatio(0.8), Angle.FromRatio(1), radius1, radius2, "#6a4c93") },
+        { "Frustrated", new FeelingTileModel(Angle.FromRatio(0), Angle.FromRatio(0.15), radius2, radius3, "#ff595e") },
+        { "Aggressive", new FeelingTileModel(Angle.FromRatio(0.15), Angle.FromRatio(0.3), radius2, radius3, "#ff595e") },
     };
 
 }
