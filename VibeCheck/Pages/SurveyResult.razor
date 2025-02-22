@@ -1,42 +1,47 @@
 ﻿@page "/{code}/results"
 @using VibeCheck.Model.ViewModels
+@using VibeCheck.Components
 @inject HttpClient Http
 
-<h3>Survey Results</h3>
-@if (responses == null)
-{
-    <p>Loading...</p>
-}
-else if (responses.Count == 0)
-{
-    <p>No responses found for this survey.</p>
-}
-else
-{
-    <ul>
-        @foreach (var response in responses)
-        {
-            <li>@response.Feeling</li>
-        }
-    </ul>
-}
+<div class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="max-w-2xl w-full p-6 bg-white rounded-2xl shadow-lg">
+        <h1 class="text-3xl font-bold text-center mb-4 text-red-500">@surveyQuestion</h1>
+
+        <div class="space-y-6">
+            <ResultsVisualization Responses="responses"/>
+        </div>
+    </div>
+</div>
 
 @code {
     [Parameter]
     public string Code { get; set; }
 
-    private List<Response> responses;
+    private string surveyQuestion;
+    private List<Model.ViewModels.SurveyResponse> responses;
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await Http.GetAsync($"http://localhost:5183/survey/responses/{Code}");
-        if (response.IsSuccessStatusCode)
+        
+        var surveyResponse = await Http.GetAsync($"http://localhost:5183/survey/{Code}");
+        if (surveyResponse.IsSuccessStatusCode)
         {
-            responses = await response.Content.ReadFromJsonAsync<List<Response>>();
+            var survey = await surveyResponse.Content.ReadFromJsonAsync<Survey>();
+            surveyQuestion = survey!.Question;
         }
         else
         {
-            responses = new List<Response>();
+            surveyQuestion = "Survey not found.";
+        }
+        
+        var responsesResponse = await Http.GetAsync($"http://localhost:5183/survey/responses/{Code}");
+        if (responsesResponse.IsSuccessStatusCode)
+        {
+            responses = await responsesResponse.Content.ReadFromJsonAsync<List<Model.ViewModels.SurveyResponse>>();
+        }
+        else
+        {
+            responses = new List<Model.ViewModels.SurveyResponse>();
         }
     }
 }

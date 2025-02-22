@@ -15,11 +15,6 @@
       <None Update="Components\FeelingsWheel.razor.css">
         <DependentUpon>FeelingsWheel.razor.razor</DependentUpon>
       </None>
-      <None Include="Properties\appSettings.json">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-        <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      </None>
     </ItemGroup>
 
     <ItemGroup>

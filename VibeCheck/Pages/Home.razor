@@ -1,21 +1,44 @@
 ﻿@page "/"
+@using VibeCheck.Model.ViewModels
 @inject NavigationManager Navigation
+@inject HttpClient Http
 
-<h1>Vibe Check</h1>
-<p>Vibe Check is an anonymous survey tool where your response options are only feelings.</p>
+<div class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="max-w-2xl w-full p-6 bg-white rounded-2xl shadow-lg">
+        <h1 class="text-3xl font-bold text-center mb-4">VibeCheck</h1>
+        <p class="text-gray-600 text-center mb-6">Create or join a vibe check session to share how you're feeling.</p>
 
-<button @onclick="CreateSurvey">Create a New Survey</button>
-<button @onclick="JoinSurvey">Join an Existing Survey</button>
+        <div class="space-y-6">
+            <!-- Join section -->
+            <div class="flex items-center space-x-4">
+                <input type="text" placeholder="ABCD" @bind="code" maxlength="4" @oninput="@(e => code = e.Value.ToString().ToUpper())"
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button class="px-6 py-3 font-semibold rounded-lg w-full @(code?.Length == 4 ? "bg-blue-500 text-white hover:bg-blue-600" : "bg-gray-500 text-gray-300")" @onclick="JoinSurvey" disabled="@(code?.Length != 4)">Join</button>
+            </div>
 
+            <!-- Create section -->
+            <div class="flex items-center space-x-4">
+                <input type="text" placeholder="Enter your question..." @bind="question"
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                <button class="px-6 py-3 font-semibold rounded-lg w-full @(string.IsNullOrWhiteSpace(question) ? "bg-gray-500 text-gray-300" : "bg-green-500 text-white hover:bg-green-600")" @onclick="CreateSurvey" disabled="@(string.IsNullOrWhiteSpace(question))">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
-    private void CreateSurvey()
+    private string question;
+    private string code;
+
+    private async Task CreateSurvey()
     {
-        Navigation.NavigateTo("/create");
+        var response = await Http.PostAsJsonAsync($"http://localhost:5183/survey/create", new SurveyRequest { Question = question });
+        var result = await response.Content.ReadFromJsonAsync<Survey>();
+        Navigation.NavigateTo($"result/{result.Code}");
     }
 
     private void JoinSurvey()
     {
-        Navigation.NavigateTo("/join");
+        Navigation.NavigateTo($"/{code}");
     }
 }

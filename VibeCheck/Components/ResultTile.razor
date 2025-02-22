@@ -3,17 +3,14 @@
 @using VibeCheck.Model.ViewModels
 @inject HttpClient Http
 
-<div class="feeling @IsHovered" style="pointer-events: none; transform-origin: @(TileCenter.Y)px @(TileCenter.X)px;">
+<div class="feeling " style="pointer-events: none; transform-origin: @(TileCenter.Y)px @(TileCenter.X)px;">
     <svg style="width: @(size)px; height: @(size)px; ">
         <path style="fill: @Tile.Color; 
                      stroke:white; 
                      stroke-width:@strokeWidth; 
                      stroke-linecap:round;
                      pointer-events: visiblePainted;" 
-              d="@GeneratePath()"
-              @onmouseover="MouseOver" 
-              @onmouseout="MouseOut"
-              @onclick="OnClick">
+              d="@GeneratePath()">
         </path>
         <text Fill="white" 
               font-size="15"
@@ -29,9 +26,6 @@
 
 @code {
     
-    [Parameter]
-    public EventCallback<string> onClick { get; set; }
-    
     public record FeelingTileModel(Angle Start, Angle End, double InnerRadius, double OuterRadius, string Color)
     {
         public double Length => OuterRadius - InnerRadius;
@@ -40,7 +34,6 @@
     [Parameter] public Feeling Feeling { get; set; } = new("",  null, 0);
     [Parameter] public FeelingTileModel Tile { get; set; } = new(Angle.FromDregrees(0), Angle.FromDregrees(0), 0,0,"");
 
-    public string IsHovered = "";
     public Angle TextRotation { get; private set; }
     public Point2D SvgCenter { get; private set; }
     public Point2D TileCenter => SvgCenter.Add(TextRotation.Project(_midRadius));
@@ -77,21 +70,5 @@
         path += "z";
         
         return path;
-    }
-    
-    void MouseOver(MouseEventArgs e) { 
-        IsHovered="hover";
-        StateHasChanged();
-    }
-    void MouseOut(MouseEventArgs e) { 
-        IsHovered="";
-        StateHasChanged();
-    }
-    async Task OnClick()
-    {
-        if (onClick.HasDelegate)
-        {
-            await onClick.InvokeAsync(Feeling.Name);
-        }
     }
 }

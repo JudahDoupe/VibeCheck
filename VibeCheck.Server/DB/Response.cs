@@ -9,5 +9,5 @@ public class Response
     public string Feeling { get; set; }
     public string Code { get; set; }
 
-    public VibeCheck.Model.ViewModels.Response ToViewModel() => new(Feeling, Code);
+    public VibeCheck.Model.ViewModels.SurveyResponse ToViewModel() => new() { Feeling = Feeling };
 }

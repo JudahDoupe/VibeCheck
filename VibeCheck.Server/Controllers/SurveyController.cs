@@ -44,10 +44,9 @@ public class SurveyController : ControllerBase
     }
 
     [HttpPost("submit/{code}")]
-    public async Task<IActionResult> SubmitResponse(string code, [FromBody] string feelingName)
+    public async Task<IActionResult> SubmitResponse(string code, [FromBody] SurveyResponse response)
     {
-        var response = new Response { Feeling = feelingName, Code = code };
-        _context.Responses.Add(response);
+        _context.Responses.Add(new Response { Feeling = response.Feeling, Code = code });
         await _context.SaveChangesAsync();
         return Ok();
     }
@@ -63,7 +62,16 @@ public class SurveyController : ControllerBase
     [HttpGet("feelings")]
     public ActionResult<List<Feeling>> GetFeelings()
     {
-        var feelings = new List<Feeling> { new("Anger", null), new("Happy", null), new("Disgust", null), new("Sad", null), new("Fear", null), new("Frustrated", "Anger"), new("Aggressive", "Anger") };
+        var feelings = new List<Feeling>
+        {
+            new("Anger", null, 0),
+            new("Happy", null, 0),
+            new("Disgust", null, 0),
+            new("Sad", null, 0),
+            new("Fear", null, 0),
+            new("Frustrated", "Anger", 1),
+            new("Aggressive", "Anger", 1),
+        };
 
         return Ok(feelings);
     }

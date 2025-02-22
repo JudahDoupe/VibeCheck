@@ -1,0 +1,101 @@
+﻿@using VibeCheck.Model.Utilities
+@using VibeCheck.Model.ViewModels
+@inject HttpClient Http
+
+<div class="feelings-wheel">
+    @foreach (var feeling in _allFeelings)
+    {
+        <ResultTile Feeling="feeling" Tile="_tiles[feeling]" />
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<SurveyResponse> Responses { get; set; }
+
+    private List<Feeling> _allFeelings = new();
+    private Dictionary<Feeling, List<Feeling>> _feelingContribution = new();
+    private Dictionary<Feeling, ResultTile.FeelingTileModel> _tiles = new();
+    private Dictionary<string, string> _colors = new()
+    {
+        { "Anger", "#ff595e" },
+        { "Happy", "#ffca3a" },
+        { "Disgust", "#8ac926" },
+        { "Sad", "#1982c4" },
+        { "Fear","#6a4c93" },
+        { "Frustrated", "#ff595e" },
+        { "Aggressive",  "#ff595e" },
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Http.GetFromJsonAsync<List<Feeling>>($"http://localhost:5183/survey/feelings");
+        if (response != null)
+        {
+            _allFeelings = response;
+            foreach (var feeling in _allFeelings)
+            {
+                var contributions = new List<Feeling>() { feeling };
+                var currentFeeling = feeling;
+                while (currentFeeling.Parent != null)
+                {
+                    currentFeeling = _allFeelings.Single(f => f.Name == currentFeeling.Parent);
+                    contributions.Add(currentFeeling);
+                }
+                _feelingContribution[feeling] = contributions;
+            }
+        }
+        
+        _tiles = SizeTiles(Responses.Select(x => _allFeelings.Single(y => y.Name == x.Feeling)).ToList());
+    }
+
+    private Dictionary<Feeling, ResultTile.FeelingTileModel> SizeTiles(List<Feeling> feelings)
+    {
+        var result = new Dictionary<Feeling, ResultTile.FeelingTileModel>();
+        
+        var totalFeelingCount = feelings.Count;
+        var feelingCounts = new Dictionary<Feeling, int>();
+        foreach (var feeling in _allFeelings)
+        {
+            feelingCounts[feeling] = 0;
+        }
+
+        foreach (Feeling contributingFeeling in feelings.SelectMany(feeling => _feelingContribution[feeling]))
+        {
+            feelingCounts[contributingFeeling]++;
+        }
+
+        var feelingStartingAngle = new Dictionary<string?, double>() { {null, 0}};
+        var innerRadius = 25;
+        var outerRadius = 100;
+        var maxOrder = feelings.Select(feeling => feeling.order).Max();
+        for (var i = 0; i < maxOrder; i++)
+        {
+
+            var orderFeelings = feelingCounts.Where(x => x.Key.order == i).Select(x => x.Key);
+            foreach (var group in orderFeelings.GroupBy(x => x.Parent))
+            {
+                
+                var startAngle = feelingStartingAngle[group.First().Parent];
+                var parentCount = i == 0 ? totalFeelingCount : feelingCounts[_allFeelings.Single(x => x.Name == group.First().Parent)];
+                foreach (var feeling in group)
+                {
+                    var size = (double)feelingCounts[feeling] / parentCount;
+                    feelingStartingAngle[feeling.Name] = startAngle;
+                    result[feeling] = new ResultTile.FeelingTileModel(
+                        Angle.FromRatio(startAngle), 
+                        Angle.FromRatio(startAngle+size), 
+                        innerRadius, 
+                        outerRadius, 
+                        _colors[feeling.Name]);
+                    startAngle+=size;
+                }
+            }
+
+            innerRadius = outerRadius;
+            outerRadius += 100;
+        }
+
+        return result;
+    }
+}

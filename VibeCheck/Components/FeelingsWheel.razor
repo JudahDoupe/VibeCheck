@@ -7,11 +7,13 @@
 <div class="feelings-wheel">
     @foreach (var feeling in _feelings)
     {
-        <EmotionTile Feeling="feeling" Tile="_tiles[feeling.Name]"/>
+        <EmotionTile Feeling="feeling" Tile="_tiles[feeling.Name]" OnClick="() => OnFeelingSelected(feeling.Name)" />
     }
 </div>
 
 @code {
+    [Parameter]
+    public EventCallback<string> onFeelingSelected { get; set; }
 
     private List<Feeling> _feelings = new();
 
@@ -19,10 +21,7 @@
     static double radius2 = 100;
     static double radius3 = 200;
     static double radius4 = 300;
-    
-    //1. build the tree of feelings
-    //2. calculate the angles and radius of the tile
-    
+
     private Dictionary<string, EmotionTile.FeelingTileModel> _tiles = new()
     {
         { "Anger", new EmotionTile.FeelingTileModel(Angle.FromRatio(0), Angle.FromRatio(0.3), radius1, radius2, "#ff595e") },
@@ -42,5 +41,12 @@
             _feelings = response;
         }
     }
-    
+
+    private async Task OnFeelingSelected(string feeling)
+    {
+        if (onFeelingSelected.HasDelegate)
+        {
+            await onFeelingSelected.InvokeAsync(feeling);
+        }
+    }
 }

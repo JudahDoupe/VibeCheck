@@ -1,15 +1,31 @@
 ﻿@page "/{code}"
 @using VibeCheck.Model.ViewModels
+@using VibeCheck.Components
 @inject HttpClient Http
+@inject NavigationManager Navigation
 
-<h3>Survey Response</h3>
-<p>@surveyQuestion</p>
+<div class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="max-w-2xl w-full p-6 bg-white rounded-2xl shadow-lg">
+        <h1 class="text-3xl font-bold text-center mb-4 text-red-500">@surveyQuestion</h1>
+
+        <div class="space-y-6">
+            <FeelingsWheel OnFeelingSelected="OnFeelingSelected" />
+        </div>
+
+        <div class="flex items-center justify-center mt-6 space-x-4">
+            <p class="text-center text-xl">I feel @selectedFeeling</p>
+            <button class="px-6 py-3 font-semibold rounded-lg  @(selectedFeeling == "_____" ? "bg-gray-500 text-gray-300" : "bg-green-500 text-white hover:bg-green-600")"
+                    @onclick="SubmitFeeling" disabled="@(selectedFeeling == "_____")">Submit</button>
+        </div>
+    </div>
+</div>
 
 @code {
     [Parameter]
     public string Code { get; set; }
 
     private string surveyQuestion;
+    private string selectedFeeling = "_____";
 
     protected override async Task OnInitializedAsync()
     {
@@ -23,5 +39,16 @@
         {
             surveyQuestion = "Survey not found.";
         }
+    }
+
+    private void OnFeelingSelected(string feeling)
+    {
+        selectedFeeling = feeling;
+    }
+
+    private async Task SubmitFeeling()
+    {
+        await Http.PostAsJsonAsync($"http://localhost:5183/survey/submit/{Code}", selectedFeeling);
+        Navigation.NavigateTo($"{Code}/results");
     }
 }
