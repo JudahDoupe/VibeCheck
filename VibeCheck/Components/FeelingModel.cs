@@ -1,4 +1,4 @@
-﻿namespace VibeCheck.Components.FeelingWheel;
+﻿namespace VibeCheck.Components;
 
 public record FeelingModel(string Name, string? Parent);
 

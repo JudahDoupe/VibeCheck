@@ -1,0 +1,17 @@
+.feeling {
+    position: absolute;
+}
+
+.feeling svg {
+    transition-duration: 0.3s;
+}
+.hover {
+    transform: scale(1.1);
+}
+
+svg text{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

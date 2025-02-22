@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeCheck", "VibeCheck\VibeCheck.csproj", "{D014F7B6-96AA-4019-B311-5AFA99962092}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeCheck", "VibeCheck\VibeCheck.csproj", "{D34F6AAC-4F79-4619-B950-3393DB499E45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D014F7B6-96AA-4019-B311-5AFA99962092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D014F7B6-96AA-4019-B311-5AFA99962092}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D014F7B6-96AA-4019-B311-5AFA99962092}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D014F7B6-96AA-4019-B311-5AFA99962092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D34F6AAC-4F79-4619-B950-3393DB499E45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D34F6AAC-4F79-4619-B950-3393DB499E45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D34F6AAC-4F79-4619-B950-3393DB499E45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D34F6AAC-4F79-4619-B950-3393DB499E45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,11 @@
+.feelings-wheel {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    margin: auto;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

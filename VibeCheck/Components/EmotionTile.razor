@@ -1,6 +1,15 @@
 ﻿<div class="feeling">
-    <svg style="width: @(size)px; height: @(size)px;">
-        <path style="fill: @Tile.Color" d="@GeneratePath()">
+    <svg style="width: @(size)px; height: @(size)px; transform-origin: @(TileCenter.Y)px @(TileCenter.X)px;"
+         class="@IsHovered">
+        <path style="fill: @Tile.Color; 
+                     stroke:white; 
+                     stroke-width:@strokeWidth; 
+                     stroke-linecap:round;
+                     pointer-events: visiblePainted;" 
+              d="@GeneratePath()"
+              @onmouseover="MouseOver" 
+              @onmouseout="MouseOut"
+              @onclick="OnClick">
         </path>
         <text Fill="white" 
               font-size="15"
@@ -18,15 +27,18 @@
     [Parameter] public FeelingModel Feeling { get; set; } = new("",  null);
     [Parameter] public FeelingTileModel Tile { get; set; } = new(Angle.FromDregrees(0), Angle.FromDregrees(0), 0,0,"");
 
+    public string IsHovered = "";
     public Angle TextRotation { get; private set; }
     public Point2D SvgCenter { get; private set; }
+    public Point2D TileCenter => SvgCenter.Add(TextRotation.Project(_midRadius));
 
     private bool _flip => TextRotation.Degree is > 90 and < 270;
-    private double size => Tile.OuterRadius * 2;
+    private double strokeWidth = 5;
+    private double size => Tile.OuterRadius * 2 + strokeWidth;
     private double _midRadius => (Tile.InnerRadius + Tile.OuterRadius) / 2.0;
     
     protected override void OnInitialized()
-    {
+    { 
         SvgCenter = new Point2D(Tile.OuterRadius, Tile.OuterRadius);
         TextRotation = Angle.FromRatio(((Tile.Start.Ratio + Tile.End.Ratio) / 2.0) - 0.25).Inverse();
     }
@@ -52,5 +64,20 @@
         path += "z";
         
         return path;
+    }
+    
+    void MouseOver(MouseEventArgs e) { 
+        IsHovered="hover";
+        StateHasChanged();
+        Console.WriteLine("mouseOver"); 
+    }
+    void MouseOut(MouseEventArgs e) { 
+        IsHovered="";
+        StateHasChanged();
+        Console.WriteLine("mouseOut"); 
+    }
+    void OnClick()
+    {
+        Console.WriteLine($"clicked");
     }
 }
