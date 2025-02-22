@@ -1,6 +1,10 @@
-﻿<div class="feeling">
-    <svg style="width: @(size)px; height: @(size)px; transform-origin: @(TileCenter.Y)px @(TileCenter.X)px;"
-         class="@IsHovered">
+﻿@using VibeCheck.Model
+@using VibeCheck.Model.Utilities
+@using VibeCheck.Model.ViewModels
+@inject HttpClient Http
+
+<div class="feeling @IsHovered" style="pointer-events: none; transform-origin: @(TileCenter.Y)px @(TileCenter.X)px;">
+    <svg style="width: @(size)px; height: @(size)px; ">
         <path style="fill: @Tile.Color; 
                      stroke:white; 
                      stroke-width:@strokeWidth; 
@@ -24,7 +28,13 @@
 </div>
 
 @code {
-    [Parameter] public FeelingModel Feeling { get; set; } = new("",  null);
+    
+    public record FeelingTileModel(Angle Start, Angle End, double InnerRadius, double OuterRadius, string Color)
+    {
+        public double Length => OuterRadius - InnerRadius;
+    }
+    
+    [Parameter] public Feeling Feeling { get; set; } = new("",  null);
     [Parameter] public FeelingTileModel Tile { get; set; } = new(Angle.FromDregrees(0), Angle.FromDregrees(0), 0,0,"");
 
     public string IsHovered = "";
@@ -69,15 +79,20 @@
     void MouseOver(MouseEventArgs e) { 
         IsHovered="hover";
         StateHasChanged();
-        Console.WriteLine("mouseOver"); 
     }
     void MouseOut(MouseEventArgs e) { 
         IsHovered="";
         StateHasChanged();
-        Console.WriteLine("mouseOut"); 
     }
-    void OnClick()
+    async void OnClick()
     {
-        Console.WriteLine($"clicked");
+        try
+        {
+            var response = await Http.PostAsJsonAsync("http://localhost:5183/survey/feeling", Feeling.Name);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Oof");
+        }
     }
 }

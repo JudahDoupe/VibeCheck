@@ -1,4 +1,21 @@
 ﻿@page "/"
-@using VibeCheck.Components
+@inject NavigationManager Navigation
 
-<FeelingsWheel />
+<h1>Vibe Check</h1>
+<p>Vibe Check is an anonymous survey tool where your response options are only feelings.</p>
+
+<button @onclick="CreateSurvey">Create a New Survey</button>
+<button @onclick="JoinSurvey">Join an Existing Survey</button>
+
+
+@code {
+    private void CreateSurvey()
+    {
+        Navigation.NavigateTo("/create");
+    }
+
+    private void JoinSurvey()
+    {
+        Navigation.NavigateTo("/join");
+    }
+}

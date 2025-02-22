@@ -1,0 +1,42 @@
+﻿@page "/{code}/results"
+@using VibeCheck.Model.ViewModels
+@inject HttpClient Http
+
+<h3>Survey Results</h3>
+@if (responses == null)
+{
+    <p>Loading...</p>
+}
+else if (responses.Count == 0)
+{
+    <p>No responses found for this survey.</p>
+}
+else
+{
+    <ul>
+        @foreach (var response in responses)
+        {
+            <li>@response.Feeling</li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter]
+    public string Code { get; set; }
+
+    private List<Response> responses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Http.GetAsync($"http://localhost:5183/survey/responses/{Code}");
+        if (response.IsSuccessStatusCode)
+        {
+            responses = await response.Content.ReadFromJsonAsync<List<Response>>();
+        }
+        else
+        {
+            responses = new List<Response>();
+        }
+    }
+}

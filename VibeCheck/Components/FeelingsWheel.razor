@@ -1,4 +1,10 @@
-﻿<div class="feelings-wheel">
+﻿@using VibeCheck.Model.Utilities
+@using Microsoft.Extensions.Configuration
+@using VibeCheck.Model.ViewModels
+@inject IConfiguration Configuration
+@inject HttpClient Http
+
+<div class="feelings-wheel">
     @foreach (var feeling in _feelings)
     {
         <EmotionTile Feeling="feeling" Tile="_tiles[feeling.Name]"/>
@@ -7,16 +13,7 @@
 
 @code {
 
-    private List<FeelingModel> _feelings = new()
-    {
-        new("Anger", null),
-        new("Happy", null),
-        new("Disgust", null),
-        new("Sad", null),
-        new("Fear", null),
-        new("Frustrated", "Anger"),
-        new("Aggressive", "Anger"),
-    };
+    private List<Feeling> _feelings = new();
 
     static double radius1 = 25;
     static double radius2 = 100;
@@ -26,15 +23,24 @@
     //1. build the tree of feelings
     //2. calculate the angles and radius of the tile
     
-    private Dictionary<string, FeelingTileModel> _tiles = new()
+    private Dictionary<string, EmotionTile.FeelingTileModel> _tiles = new()
     {
-        { "Anger", new FeelingTileModel(Angle.FromRatio(0), Angle.FromRatio(0.3), radius1, radius2, "#ff595e") },
-        { "Happy", new FeelingTileModel(Angle.FromRatio(0.3), Angle.FromRatio(0.5), radius1, radius2, "#ffca3a") },
-        { "Disgust", new FeelingTileModel(Angle.FromRatio(0.5), Angle.FromRatio(0.7), radius1, radius2, "#8ac926") },
-        { "Sad", new FeelingTileModel(Angle.FromRatio(0.7), Angle.FromRatio(0.8), radius1, radius2, "#1982c4") },
-        { "Fear", new FeelingTileModel(Angle.FromRatio(0.8), Angle.FromRatio(1), radius1, radius2, "#6a4c93") },
-        { "Frustrated", new FeelingTileModel(Angle.FromRatio(0), Angle.FromRatio(0.15), radius2, radius3, "#ff595e") },
-        { "Aggressive", new FeelingTileModel(Angle.FromRatio(0.15), Angle.FromRatio(0.3), radius2, radius3, "#ff595e") },
+        { "Anger", new EmotionTile.FeelingTileModel(Angle.FromRatio(0), Angle.FromRatio(0.3), radius1, radius2, "#ff595e") },
+        { "Happy", new EmotionTile.FeelingTileModel(Angle.FromRatio(0.3), Angle.FromRatio(0.5), radius1, radius2, "#ffca3a") },
+        { "Disgust", new EmotionTile.FeelingTileModel(Angle.FromRatio(0.5), Angle.FromRatio(0.7), radius1, radius2, "#8ac926") },
+        { "Sad", new EmotionTile.FeelingTileModel(Angle.FromRatio(0.7), Angle.FromRatio(0.8), radius1, radius2, "#1982c4") },
+        { "Fear", new EmotionTile.FeelingTileModel(Angle.FromRatio(0.8), Angle.FromRatio(1), radius1, radius2, "#6a4c93") },
+        { "Frustrated", new EmotionTile.FeelingTileModel(Angle.FromRatio(0), Angle.FromRatio(0.15), radius2, radius3, "#ff595e") },
+        { "Aggressive", new EmotionTile.FeelingTileModel(Angle.FromRatio(0.15), Angle.FromRatio(0.3), radius2, radius3, "#ff595e") },
     };
 
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Http.GetFromJsonAsync<List<Feeling>>($"http://localhost:5183/survey/feelings");
+        if (response != null)
+        {
+            _feelings = response;
+        }
+    }
+    
 }

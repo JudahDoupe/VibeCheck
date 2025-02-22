@@ -1,0 +1,27 @@
+﻿@page "/{code}"
+@using VibeCheck.Model.ViewModels
+@inject HttpClient Http
+
+<h3>Survey Response</h3>
+<p>@surveyQuestion</p>
+
+@code {
+    [Parameter]
+    public string Code { get; set; }
+
+    private string surveyQuestion;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Http.GetAsync($"http://localhost:5183/survey/{Code}");
+        if (response.IsSuccessStatusCode)
+        {
+            var survey = await response.Content.ReadFromJsonAsync<Survey>();
+            surveyQuestion = survey!.Question;
+        }
+        else
+        {
+            surveyQuestion = "Survey not found.";
+        }
+    }
+}

@@ -47,3 +47,19 @@ build_metadata.AdditionalFiles.CssScope = b-annjtbe8em
 [C:/Projects/VibeCheck/VibeCheck/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-6hl8uuudbf
+
+[C:/Projects/VibeCheck/VibeCheck/Pages/CreateSurvey.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3JlYXRlU3VydmV5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-ratk9wv4yv
+
+[C:/Projects/VibeCheck/VibeCheck/Pages/JoinSurvey.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSm9pblN1cnZleS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-soyggg4117
+
+[C:/Projects/VibeCheck/VibeCheck/Pages/SurveyResponse.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VydmV5UmVzcG9uc2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-mz3zxyw7ax
+
+[C:/Projects/VibeCheck/VibeCheck/Pages/SurveyResult.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VydmV5UmVzdWx0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-pprpj6nq9u

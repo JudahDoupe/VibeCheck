@@ -1,12 +1,11 @@
 .feeling {
     position: absolute;
-}
-
-.feeling svg {
     transition-duration: 0.3s;
 }
+
 .hover {
     transform: scale(1.1);
+    z-index: 1;
 }
 
 svg text{
