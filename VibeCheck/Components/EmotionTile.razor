@@ -5,7 +5,7 @@
 
 <div class="feeling @IsHovered" style="pointer-events: none; transform-origin: @(TileCenter.Y)px @(TileCenter.X)px;">
     <svg style="width: @(size)px; height: @(size)px; ">
-        <path style="fill: @Tile.Color; 
+        <path style="fill: @Feeling.color; 
                      stroke:white; 
                      stroke-width:@strokeWidth; 
                      stroke-linecap:round;
@@ -32,13 +32,13 @@
     [Parameter]
     public EventCallback<string> onClick { get; set; }
     
-    public record FeelingTileModel(Angle Start, Angle End, double InnerRadius, double OuterRadius, string Color)
+    public record FeelingTileModel(Angle Start, Angle End, double InnerRadius, double OuterRadius)
     {
         public double Length => OuterRadius - InnerRadius;
     }
     
-    [Parameter] public Feeling Feeling { get; set; } = new("",  null, 0);
-    [Parameter] public FeelingTileModel Tile { get; set; } = new(Angle.FromDregrees(0), Angle.FromDregrees(0), 0,0,"");
+    [Parameter] public Feeling Feeling { get; set; } = new("",  null, 0, "");
+    [Parameter] public FeelingTileModel Tile { get; set; } = new(Angle.FromDregrees(0), Angle.FromDregrees(0), 0,0);
 
     public string IsHovered = "";
     public Angle TextRotation { get; private set; }
