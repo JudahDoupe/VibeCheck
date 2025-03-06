@@ -11,4 +11,6 @@ public record Feeling(string Name, string FullPath, string Color)
         var parentName = parentPath.Substring(parentPath.LastIndexOf('/') + 1);
         return new Feeling(parentName, parentPath, Color);
     }
+
+    public int Depth => FullPath.Count(c => c == '/');
 }

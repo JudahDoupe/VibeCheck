@@ -5,7 +5,7 @@
 
 <div class="feeling " style="pointer-events: none; transform-origin: @(TileCenter.Y)px @(TileCenter.X)px;">
     <svg style="width: @(size)px; height: @(size)px; ">
-        <path style="fill: @Feeling.color; 
+        <path style="fill: @Feeling.Color; 
                      stroke:white; 
                      stroke-width:@strokeWidth; 
                      stroke-linecap:round;
@@ -31,7 +31,7 @@
         public double Length => OuterRadius - InnerRadius;
     }
     
-    [Parameter] public Feeling Feeling { get; set; } = new("",  null, 0, "");
+    [Parameter] public Feeling Feeling { get; set; } = new("", "","");
     [Parameter] public FeelingTileModel Tile { get; set; } = new(Angle.FromDregrees(0), Angle.FromDregrees(0), 0,0);
 
     public Angle TextRotation { get; private set; }

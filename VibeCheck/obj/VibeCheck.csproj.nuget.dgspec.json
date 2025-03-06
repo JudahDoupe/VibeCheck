@@ -10,11 +10,11 @@
         "projectUniqueName": "C:\\Projects\\VibeCheck\\VibeCheck.Model\\VibeCheck.Model.csproj",
         "projectName": "VibeCheck.Model",
         "projectPath": "C:\\Projects\\VibeCheck\\VibeCheck.Model\\VibeCheck.Model.csproj",
-        "packagesPath": "C:\\Users\\jjdoupe\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\judah\\.nuget\\packages\\",
         "outputPath": "C:\\Projects\\VibeCheck\\VibeCheck.Model\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jjdoupe\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\judah\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -38,7 +38,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -59,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.103/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\judah\\.dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
@@ -69,11 +69,11 @@
         "projectUniqueName": "C:\\Projects\\VibeCheck\\VibeCheck\\VibeCheck.csproj",
         "projectName": "VibeCheck",
         "projectPath": "C:\\Projects\\VibeCheck\\VibeCheck\\VibeCheck.csproj",
-        "packagesPath": "C:\\Users\\jjdoupe\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\judah\\.nuget\\packages\\",
         "outputPath": "C:\\Projects\\VibeCheck\\VibeCheck\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jjdoupe\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\judah\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -101,7 +101,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -151,7 +151,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.103/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\judah\\.dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

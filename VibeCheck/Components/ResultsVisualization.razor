@@ -14,62 +14,50 @@
     public List<SurveyResponse> Responses { get; set; }
 
     private Dictionary<Feeling, ResultTile.FeelingTileModel> _tiles = new();
-    private Dictionary<(string, int), Feeling> _allFeelings = new();
+    private List<Feeling> _allFeelings = new();
 
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await Http.GetFromJsonAsync<List<Feeling>>($"http://localhost:5183/survey/feelings");
-        if (response != null)
-        {
-            _allFeelings = response.ToDictionary(x => (x.Name, x.order));
-            _tiles = SizeTiles();
-            
-        }
+        _tiles = SizeTiles();
     }
 
     private Dictionary<Feeling, ResultTile.FeelingTileModel> SizeTiles()
     {
         var result = new Dictionary<Feeling, ResultTile.FeelingTileModel>();
         
-        //This should use responses not all feelings
-        var totalFeelingCount = _allFeelings.Count;
+        var totalFeelingCount = Responses.Count;
         var feelingCounts = new Dictionary<Feeling, int>();
-        foreach (var feeling in _allFeelings.Values)
-        {
-            feelingCounts[feeling] = 0;
-        }
 
-        
-        foreach (var feeling in _allFeelings.Values)
+        foreach (var response in Responses)
         {
-            var currentFeeling = feeling;
+            var currentFeeling = response.Feeling;
             do
             {
+                feelingCounts.TryAdd(currentFeeling, 0);
                 feelingCounts[currentFeeling]++;
-                currentFeeling = currentFeeling.Parent == null ? null : _allFeelings[(currentFeeling.Parent, currentFeeling.order -1)];
+                currentFeeling = currentFeeling.Parent();
             } while (currentFeeling is not null);
         }
         
-        var feelingStartingAngle = new Dictionary<string, double>();
-        var feelingMaxSize = new Dictionary<string, double>();
+        var feelingStartingAngle = new Dictionary<Feeling, double>();
+        var feelingMaxSize = new Dictionary<Feeling, double>();
         var innerRadius = 25;
         var outerRadius = 100;
-        for (var i = 0; i < 3; i++)
+        for (var depth = 0; depth < 3; depth++)
         {
-
-            var orderFeelings = feelingCounts.Where(x => x.Key.order == i).Select(x => x.Key);
-            foreach (var group in orderFeelings.GroupBy(x => x.Parent))
+            var similarDepthFeelings = feelingCounts.Select(x => x.Key).Where(x => x.Depth == depth);
+            foreach (var siblingFeelings in similarDepthFeelings.GroupBy(x => x.Parent()))
             {
-                var parentFeeling = group.First().Parent;
+                var parentFeeling = siblingFeelings.First().Parent();
                 var startAngle = parentFeeling == null ? 0 :feelingStartingAngle[parentFeeling];
                 var maxSize = parentFeeling == null ? 1 :feelingMaxSize[parentFeeling];
-                var parentCount = parentFeeling == null ? totalFeelingCount : feelingCounts[_allFeelings[(parentFeeling, i-1)]];
-                foreach (var feeling in group)
+                var parentCount = parentFeeling == null ? totalFeelingCount : feelingCounts[parentFeeling];
+                foreach (var feeling in siblingFeelings)
                 {
                     var size = ((double)feelingCounts[feeling] / parentCount) * maxSize;
-                    feelingStartingAngle[feeling.Name] = startAngle;
-                    feelingMaxSize[feeling.Name] = size;
+                    feelingStartingAngle[feeling] = startAngle;
+                    feelingMaxSize[feeling] = size;
                     result[feeling] = new ResultTile.FeelingTileModel(
                         Angle.FromRatio(startAngle), 
                         Angle.FromRatio(startAngle+size), 

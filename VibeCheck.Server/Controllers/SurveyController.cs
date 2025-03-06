@@ -46,7 +46,12 @@ public class SurveyController : ControllerBase
     [HttpPost("submit/{code}")]
     public async Task<IActionResult> SubmitResponse(string code, [FromBody] SurveyResponse response)
     {
-        _context.Responses.Add(new Response { Feeling = response.Feeling, Code = code });
+        _context.Responses.Add(new Response { 
+            FeelingPath = response.Feeling.FullPath, 
+            FeelingName = response.Feeling.Name, 
+            Color = response.Feeling.Color, 
+            Code = code 
+        });
         await _context.SaveChangesAsync();
         return Ok();
     }
