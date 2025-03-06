@@ -13,8 +13,8 @@
     [Parameter]
     public List<SurveyResponse> Responses { get; set; }
 
-    private Dictionary<string, Feeling> _allFeelings = new();
     private Dictionary<Feeling, ResultTile.FeelingTileModel> _tiles = new();
+    private Dictionary<(string, int), Feeling> _allFeelings = new();
 
 
     protected override async Task OnInitializedAsync()
@@ -22,17 +22,18 @@
         var response = await Http.GetFromJsonAsync<List<Feeling>>($"http://localhost:5183/survey/feelings");
         if (response != null)
         {
-            _allFeelings = response.ToDictionary(x => x.Name);
+            _allFeelings = response.ToDictionary(x => (x.Name, x.order));
+            _tiles = SizeTiles();
+            
         }
-        
-        _tiles = SizeTiles(Responses.Select(x => _allFeelings[x.Feeling]).ToList());
     }
 
-    private Dictionary<Feeling, ResultTile.FeelingTileModel> SizeTiles(List<Feeling> feelings)
+    private Dictionary<Feeling, ResultTile.FeelingTileModel> SizeTiles()
     {
         var result = new Dictionary<Feeling, ResultTile.FeelingTileModel>();
         
-        var totalFeelingCount = feelings.Count;
+        //This should use responses not all feelings
+        var totalFeelingCount = _allFeelings.Count;
         var feelingCounts = new Dictionary<Feeling, int>();
         foreach (var feeling in _allFeelings.Values)
         {
@@ -40,42 +41,35 @@
         }
 
         
-        var feelingContribution = new Dictionary<Feeling, List<Feeling>>();
-        foreach (var feeling in feelings)
+        foreach (var feeling in _allFeelings.Values)
         {
-            var contributions = new List<Feeling>() { feeling };
             var currentFeeling = feeling;
-            while (currentFeeling.Parent != null)
+            do
             {
-                currentFeeling = _allFeelings[currentFeeling.Parent];
-                contributions.Add(currentFeeling);
-            }
-            feelingContribution[feeling] = contributions;
+                feelingCounts[currentFeeling]++;
+                currentFeeling = currentFeeling.Parent == null ? null : _allFeelings[(currentFeeling.Parent, currentFeeling.order -1)];
+            } while (currentFeeling is not null);
         }
         
-        
-        foreach (Feeling contributingFeeling in feelings.SelectMany(feeling => feelingContribution[feeling]))
-        {
-            feelingCounts[contributingFeeling]++;
-        }
-
-        var feelingStartingAngle = new Dictionary<string?, double>() { {null, 0}};
+        var feelingStartingAngle = new Dictionary<string, double>();
+        var feelingMaxSize = new Dictionary<string, double>();
         var innerRadius = 25;
         var outerRadius = 100;
-        var maxOrder = feelings.Select(feeling => feeling.order).Max();
-        for (var i = 0; i < maxOrder; i++)
+        for (var i = 0; i < 3; i++)
         {
 
             var orderFeelings = feelingCounts.Where(x => x.Key.order == i).Select(x => x.Key);
             foreach (var group in orderFeelings.GroupBy(x => x.Parent))
             {
                 var parentFeeling = group.First().Parent;
-                var startAngle = feelingStartingAngle[group.First().Parent];
-                var parentCount = parentFeeling == null ? totalFeelingCount : feelingCounts[_allFeelings[parentFeeling]];
+                var startAngle = parentFeeling == null ? 0 :feelingStartingAngle[parentFeeling];
+                var maxSize = parentFeeling == null ? 1 :feelingMaxSize[parentFeeling];
+                var parentCount = parentFeeling == null ? totalFeelingCount : feelingCounts[_allFeelings[(parentFeeling, i-1)]];
                 foreach (var feeling in group)
                 {
-                    var size = (double)feelingCounts[feeling] / parentCount;
+                    var size = ((double)feelingCounts[feeling] / parentCount) * maxSize;
                     feelingStartingAngle[feeling.Name] = startAngle;
+                    feelingMaxSize[feeling.Name] = size;
                     result[feeling] = new ResultTile.FeelingTileModel(
                         Angle.FromRatio(startAngle), 
                         Angle.FromRatio(startAngle+size), 
