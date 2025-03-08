@@ -5,9 +5,21 @@ services:
     image: vibecheckserver
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.server
     ports:
       - "5000:80"
+    volumes:
+      - .:/app
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  vibecheck:
+    image: vibecheck
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    ports:
+      - "5001:80"
     volumes:
       - .:/app
     environment:

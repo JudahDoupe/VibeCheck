@@ -1,0 +1,28 @@
+# Build stage for VibeCheckServer
+FROM mcr.microsoft.com/dotnet/nightly/sdk:9.0 AS build-server
+WORKDIR /app
+
+# Copy the solution file and the VibeCheckServer and VibeCheckModel project files
+COPY VibeCheck.sln ./
+COPY VibeCheckServer/VibeCheckServer.csproj ./VibeCheckServer/
+COPY VibeCheckModel/VibeCheckModel.csproj ./VibeCheckModel/
+
+RUN dotnet restore VibeCheckServer/VibeCheckServer.csproj
+
+# Copy the remaining files and build the application
+COPY . .
+WORKDIR /app/VibeCheckServer
+RUN dotnet publish -c Release -o /app/publish-server
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:9.0 AS final
+WORKDIR /app
+
+# Copy the published outputs
+COPY --from=build-server /app/publish-server ./
+
+# Expose ports and start the app
+EXPOSE 80
+EXPOSE 443
+
+ENTRYPOINT ["dotnet", "VibeCheckServer.dll"]

@@ -1,0 +1,31 @@
+# Build stage for VibeCheck
+FROM mcr.microsoft.com/dotnet/nightly/sdk:9.0 AS build-web
+WORKDIR /app
+
+# Copy the solution file and the VibeCheck and VibeCheckModel project files
+COPY VibeCheck.sln ./
+COPY VibeCheck/VibeCheck.csproj ./VibeCheck/
+COPY VibeCheckModel/VibeCheckModel.csproj ./VibeCheckModel/
+
+RUN dotnet restore VibeCheck/VibeCheck.csproj
+
+# Copy the remaining files and build the application
+COPY . .
+WORKDIR /app/VibeCheck
+RUN dotnet publish -c Release -o /app/publish-web
+
+# Debugging: List the contents of the publish directory
+RUN ls -la /app/publish-web
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:9.0 AS final
+WORKDIR /app
+
+# Copy the published outputs
+COPY --from=build-web /app/publish-web ./
+
+# Expose ports and start the app
+EXPOSE 80
+EXPOSE 443
+
+ENTRYPOINT ["dotnet", "VibeCheck.dll"]
