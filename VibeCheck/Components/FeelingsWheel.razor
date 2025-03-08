@@ -60,7 +60,7 @@
             do
             {
                 feelingCounts[currentFeeling]++;
-                currentFeeling = currentFeeling.Parent();
+                currentFeeling = currentFeeling.Parent;
             } while (currentFeeling is not null);
         }
         
@@ -72,9 +72,9 @@
         {
 
             var orderFeelings = feelingCounts.Select(x => x.Key).Where(x => x.Depth == order);
-            foreach (var group in orderFeelings.GroupBy(x => x.Parent()))
+            foreach (var group in orderFeelings.GroupBy(x => x.Parent))
             {
-                var parentFeeling = group.First().Parent();
+                var parentFeeling = group.First().Parent;
                 var startAngle = parentFeeling == null ? 0 :feelingStartingAngle[parentFeeling];
                 var maxSize = parentFeeling == null ? 1 :feelingMaxSize[parentFeeling];
                 var parentCount = parentFeeling == null ? totalFeelingCount : feelingCounts[parentFeeling];

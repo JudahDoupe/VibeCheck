@@ -31,7 +31,7 @@
         public double Length => OuterRadius - InnerRadius;
     }
     
-    [Parameter] public Feeling Feeling { get; set; } = new("", "","");
+    [Parameter] public Feeling Feeling { get; set; } = new("","");
     [Parameter] public FeelingTileModel Tile { get; set; } = new(Angle.FromDregrees(0), Angle.FromDregrees(0), 0,0);
 
     public Angle TextRotation { get; private set; }

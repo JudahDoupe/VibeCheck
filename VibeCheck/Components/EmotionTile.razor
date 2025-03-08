@@ -37,7 +37,7 @@
         public double Length => OuterRadius - InnerRadius;
     }
     
-    [Parameter] public Feeling Feeling { get; set; } = new("",  "",  "");
+    [Parameter] public Feeling Feeling { get; set; } = new("",  "");
     [Parameter] public FeelingTileModel Tile { get; set; } = new(Angle.FromDregrees(0), Angle.FromDregrees(0), 0,0);
 
     public string IsHovered = "";
@@ -55,8 +55,8 @@
         SvgCenter = new Point2D(Tile.OuterRadius, Tile.OuterRadius);
         TextRotation = Angle.FromRatio(((Tile.Start.Ratio + Tile.End.Ratio) / 2.0) - 0.25).Inverse();
     }
-    
-    public string GeneratePath()
+
+    private string GeneratePath()
     {
         var start = Tile.Start;
         var end = Tile.End;
