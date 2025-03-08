@@ -433,14 +433,14 @@
           "build/Microsoft.NET.Sdk.WebAssembly.Pack.targets": {}
         }
       },
-      "VibeCheck.Model/1.0.0": {
+      "VibeCheckModel/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "compile": {
-          "bin/placeholder/VibeCheck.Model.dll": {}
+          "bin/placeholder/VibeCheckModel.dll": {}
         },
         "runtime": {
-          "bin/placeholder/VibeCheck.Model.dll": {}
+          "bin/placeholder/VibeCheckModel.dll": {}
         }
       }
     },
@@ -876,14 +876,14 @@
           "build/Microsoft.NET.Sdk.WebAssembly.Pack.targets": {}
         }
       },
-      "VibeCheck.Model/1.0.0": {
+      "VibeCheckModel/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "compile": {
-          "bin/placeholder/VibeCheck.Model.dll": {}
+          "bin/placeholder/VibeCheckModel.dll": {}
         },
         "runtime": {
-          "bin/placeholder/VibeCheck.Model.dll": {}
+          "bin/placeholder/VibeCheckModel.dll": {}
         }
       }
     }
@@ -1767,10 +1767,10 @@
         "tools/net9.0/Microsoft.NET.WebAssembly.Webcil.dll"
       ]
     },
-    "VibeCheck.Model/1.0.0": {
+    "VibeCheckModel/1.0.0": {
       "type": "project",
-      "path": "../VibeCheck.Model/VibeCheck.Model.csproj",
-      "msbuildProject": "../VibeCheck.Model/VibeCheck.Model.csproj"
+      "path": "../VibeCheckModel/VibeCheckModel.csproj",
+      "msbuildProject": "../VibeCheckModel/VibeCheckModel.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -1779,7 +1779,7 @@
       "Microsoft.AspNetCore.Components.WebAssembly.DevServer >= 9.0.2",
       "Microsoft.NET.ILLink.Tasks >= 9.0.2",
       "Microsoft.NET.Sdk.WebAssembly.Pack >= 9.0.2",
-      "VibeCheck.Model >= 1.0.0"
+      "VibeCheckModel >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1807,8 +1807,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Projects\\VibeCheck\\VibeCheck.Model\\VibeCheck.Model.csproj": {
-              "projectPath": "C:\\Projects\\VibeCheck\\VibeCheck.Model\\VibeCheck.Model.csproj"
+            "C:\\Projects\\VibeCheck\\VibeCheckModel\\VibeCheckModel.csproj": {
+              "projectPath": "C:\\Projects\\VibeCheck\\VibeCheckModel\\VibeCheckModel.csproj"
             }
           }
         }

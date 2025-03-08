@@ -2,9 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeCheck", "VibeCheck\VibeCheck.csproj", "{D34F6AAC-4F79-4619-B950-3393DB499E45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeCheck.Server", "VibeCheck.Server\VibeCheck.Server.csproj", "{5586EF70-1A0B-44F4-ACBC-A1D8A3933F24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeCheckServer", "VibeCheckServer\VibeCheckServer.csproj", "{5586EF70-1A0B-44F4-ACBC-A1D8A3933F24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeCheck.Model", "VibeCheck.Model\VibeCheck.Model.csproj", "{086EA89A-4CFD-4F16-B71E-0D31F6734061}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeCheckModel", "VibeCheckModel\VibeCheckModel.csproj", "{086EA89A-4CFD-4F16-B71E-0D31F6734061}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

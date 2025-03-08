@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\VibeCheck.Model\VibeCheck.Model.csproj" />
+      <ProjectReference Include="..\VibeCheckModel\VibeCheckModel.csproj" />
     </ItemGroup>
 
 </Project>

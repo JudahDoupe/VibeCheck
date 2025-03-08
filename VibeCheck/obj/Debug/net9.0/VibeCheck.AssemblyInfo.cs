@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VibeCheck")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8adb55fb3f1ed61bb961a6311b5b4943c76039ec")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bcee1e7af45cf5ce84200f87c5ea13a68aeeb298")]
 [assembly: System.Reflection.AssemblyProductAttribute("VibeCheck")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VibeCheck")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -4,14 +4,14 @@
     "C:\\Projects\\VibeCheck\\VibeCheck\\VibeCheck.csproj": {}
   },
   "projects": {
-    "C:\\Projects\\VibeCheck\\VibeCheck.Model\\VibeCheck.Model.csproj": {
+    "C:\\Projects\\VibeCheck\\VibeCheckModel\\VibeCheckModel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projects\\VibeCheck\\VibeCheck.Model\\VibeCheck.Model.csproj",
-        "projectName": "VibeCheck.Model",
-        "projectPath": "C:\\Projects\\VibeCheck\\VibeCheck.Model\\VibeCheck.Model.csproj",
+        "projectUniqueName": "C:\\Projects\\VibeCheck\\VibeCheckModel\\VibeCheckModel.csproj",
+        "projectName": "VibeCheckModel",
+        "projectPath": "C:\\Projects\\VibeCheck\\VibeCheckModel\\VibeCheckModel.csproj",
         "packagesPath": "C:\\Users\\judah\\.nuget\\packages\\",
-        "outputPath": "C:\\Projects\\VibeCheck\\VibeCheck.Model\\obj\\",
+        "outputPath": "C:\\Projects\\VibeCheck\\VibeCheckModel\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\judah\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -85,8 +85,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Projects\\VibeCheck\\VibeCheck.Model\\VibeCheck.Model.csproj": {
-                "projectPath": "C:\\Projects\\VibeCheck\\VibeCheck.Model\\VibeCheck.Model.csproj"
+              "C:\\Projects\\VibeCheck\\VibeCheckModel\\VibeCheckModel.csproj": {
+                "projectPath": "C:\\Projects\\VibeCheck\\VibeCheckModel\\VibeCheckModel.csproj"
               }
             }
           }
