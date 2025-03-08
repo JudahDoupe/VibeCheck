@@ -34,7 +34,7 @@
     {
         var response = await Http.PostAsJsonAsync($"http://localhost:5183/survey/create", new SurveyRequest { Question = question });
         var result = await response.Content.ReadFromJsonAsync<Survey>();
-        Navigation.NavigateTo($"{result.Code}/results");
+        Navigation.NavigateTo($"/{result.Code}");
     }
 
     private void JoinSurvey()

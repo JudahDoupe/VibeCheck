@@ -7,13 +7,13 @@
 <div class="feelings-wheel">
     @foreach (var tile in _tiles)
     {
-        <EmotionTile Feeling="tile.Key" Tile="tile.Value" OnClick="() => OnFeelingSelected(tile.Key.Name)" />
+        <EmotionTile Feeling="tile.Key" Tile="tile.Value" OnClick="() => OnFeelingSelected(tile.Key)" />
     }
 </div>
 
 @code {
     [Parameter]
-    public EventCallback<string> onFeelingSelected { get; set; }
+    public EventCallback<Feeling> onFeelingSelected { get; set; }
 
     private List< Feeling> _allFeelings = [];
 
@@ -34,7 +34,7 @@
         }
     }
 
-    private async Task OnFeelingSelected(string feeling)
+    private async Task OnFeelingSelected(Feeling feeling)
     {
         if (onFeelingSelected.HasDelegate)
         {

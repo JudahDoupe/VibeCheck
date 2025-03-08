@@ -43,15 +43,15 @@ public class SurveyController : ControllerBase
         return Ok(survey.ToViewModel());
     }
 
-    [HttpPost("submit/{code}")]
-    public async Task<IActionResult> SubmitResponse(string code, [FromBody] SurveyResponse response)
+    [HttpPost("{code}/submit")]
+    public async Task<IActionResult> SubmitResponse(string code, [FromBody] Feeling response)
     {
-        _context.Responses.Add(new Response(response.Feeling.Path, code));
+        _context.Responses.Add(new Response(code, response.Path));
         await _context.SaveChangesAsync();
         return Ok();
     }
 
-    [HttpGet("responses/{code}")]
+    [HttpGet("{code}/responses")]
     public async Task<ActionResult<List<Response>>> GetResponses(string code)
     {
         var colorLookup = GetAllFeelings().ToDictionary(x => x.Path, x => x.Color);
