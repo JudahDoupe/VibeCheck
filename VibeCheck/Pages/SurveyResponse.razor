@@ -29,7 +29,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await Http.GetAsync($"http://localhost:5183/survey/{Code}");
+        var response = await Http.GetAsync($"/survey/{Code}");
         if (response.IsSuccessStatusCode)
         {
             var survey = await response.Content.ReadFromJsonAsync<Survey>();
@@ -50,7 +50,7 @@
     {
         if (selectedFeeling is not null)
         {
-            await Http.PostAsJsonAsync($"http://localhost:5183/survey/{Code}/submit", selectedFeeling);
+            await Http.PostAsJsonAsync($"/survey/{Code}/submit", selectedFeeling);
             Navigation.NavigateTo($"{Code}/results");
         }
     }

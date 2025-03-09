@@ -29,7 +29,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var surveyResponse = await Http.GetAsync($"http://localhost:5183/survey/{Code}");
+        var surveyResponse = await Http.GetAsync($"/survey/{Code}");
         if (surveyResponse.IsSuccessStatusCode)
         {
             var survey = await surveyResponse.Content.ReadFromJsonAsync<Survey>();
@@ -40,7 +40,7 @@
             surveyQuestion = "Survey not found.";
         }
 
-        var responsesResponse = await Http.GetAsync($"http://localhost:5183/survey/{Code}/responses");
+        var responsesResponse = await Http.GetAsync($"/survey/{Code}/responses");
         if (responsesResponse.IsSuccessStatusCode)
         {
             responses = await responsesResponse.Content.ReadFromJsonAsync<List<Model.ViewModels.SurveyResponse>>();

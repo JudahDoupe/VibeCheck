@@ -16,17 +16,12 @@
     public EventCallback<Feeling> onFeelingSelected { get; set; }
 
     private List< Feeling> _allFeelings = [];
-
-    static double radius1 = 25;
-    static double radius2 = 100;
-    static double radius3 = 200;
-    static double radius4 = 300;
-
+    
     private Dictionary<Feeling, EmotionTile.FeelingTileModel> _tiles = new();
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await Http.GetFromJsonAsync<List<Feeling>>($"http://localhost:5183/survey/feelings");
+        var response = await Http.GetFromJsonAsync<List<Feeling>>($"/survey/feelings");
         if (response != null)
         {
             _allFeelings = response;

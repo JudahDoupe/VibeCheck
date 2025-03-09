@@ -29,7 +29,6 @@ COPY --from=build /app/publish/wwwroot ./wwwroot
 RUN ls -l 
 
 # Expose ports and start the app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8080
 
 ENTRYPOINT ["dotnet", "VibeCheckServer.dll"]
