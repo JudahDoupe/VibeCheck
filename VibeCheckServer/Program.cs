@@ -23,6 +23,9 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(connectionString));
 
+// Add services for Razor Pages
+builder.Services.AddRazorPages();
+
 //Build App
 var app = builder.Build();
 
@@ -38,9 +41,15 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 app.UseHttpsRedirection();
+app.UseStaticFiles(); // Serve static files
 app.UseRouting();
 app.UseCors(cors => cors.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin => true).AllowCredentials());
-app.UseEndpoints(endpoints => endpoints.MapControllers());
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapRazorPages();
+    endpoints.MapFallbackToFile("index.html"); // Fallback to Blazor WebAssembly app
+});
 
 //run app
 app.Run();

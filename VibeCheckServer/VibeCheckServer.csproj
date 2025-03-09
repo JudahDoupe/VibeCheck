@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\VibeCheckModel\VibeCheckModel.csproj" />
+      <ProjectReference Include="..\VibeCheck\VibeCheck.csproj" />
     </ItemGroup>
 
     <ItemGroup>
