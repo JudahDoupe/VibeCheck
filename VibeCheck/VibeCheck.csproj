@@ -4,11 +4,10 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <CompressionEnabled>true</CompressionEnabled>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <OutputPath>..\VibeCheckServer\wwwroot</OutputPath>
+        <CompressionEnabled>false</CompressionEnabled>
+        <OutputType>Library</OutputType>
+        <OutputPath>../VibeCheckServer/wwwroot</OutputPath>
+        <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
     </PropertyGroup>
 
     <ItemGroup>

@@ -15,8 +15,6 @@ COPY . .
 RUN dotnet publish VibeCheckServer/VibeCheckServer.csproj -c Release -o /app/publish/server
 RUN dotnet publish VibeCheck/VibeCheck.csproj -c Release -o /app/publish/wwwroot
 
-RUN ls -l /app/publish
-
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
@@ -26,7 +24,7 @@ COPY --from=build /app/publish/server .
 COPY --from=build /app/publish/wwwroot ./wwwroot
 
 
-RUN ls -l 
+RUN ls -l /app/wwwroot/_framework
 
 # Expose ports and start the app
 EXPOSE 8080
