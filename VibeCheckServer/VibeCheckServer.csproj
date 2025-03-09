@@ -25,4 +25,10 @@
       <Folder Include="Migrations\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwroot\net9.0\VibeCheck.staticwebassets.endpoints.json" />
+      <_ContentIncludedByDefault Remove="wwroot\net9.0\VibeCheck.staticwebassets.runtime.json" />
+      <_ContentIncludedByDefault Remove="wwroot\net9.0\wwwroot\_framework\blazor.boot.json" />
+    </ItemGroup>
+
 </Project>

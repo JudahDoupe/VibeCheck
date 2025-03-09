@@ -2,5 +2,5 @@
 
 public class SurveyResponse
 {
-    public Feeling Feeling { get; set; }
+    public Feeling Feeling { get; set; } = new Feeling("", "");
 };

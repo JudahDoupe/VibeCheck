@@ -22,7 +22,7 @@
 
 @code {
     [Parameter]
-    public string Code { get; set; }
+    public string Code { get; set; } = string.Empty;
 
     private string surveyQuestion;
     private List<Model.ViewModels.SurveyResponse> responses = new();
@@ -43,11 +43,11 @@
         var responsesResponse = await Http.GetAsync($"/survey/{Code}/responses");
         if (responsesResponse.IsSuccessStatusCode)
         {
-            responses = await responsesResponse.Content.ReadFromJsonAsync<List<Model.ViewModels.SurveyResponse>>();
+            responses = await responsesResponse.Content.ReadFromJsonAsync<List<Model.ViewModels.SurveyResponse>>() ?? [];
         }
         else
         {
-            responses = new List<Model.ViewModels.SurveyResponse>();
+            responses = [];
         }
     }
 }

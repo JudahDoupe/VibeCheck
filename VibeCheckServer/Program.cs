@@ -4,11 +4,18 @@ using VibeCheckServer.DB;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//config db
+// Config db
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-File.Delete(connectionString?.Replace("Data Source=", "") ?? string.Empty);
+if (!string.IsNullOrEmpty(connectionString))
+{
+    var dbFilePath = connectionString.Replace("Data Source=", "");
+    if (File.Exists(dbFilePath))
+    {
+        File.Delete(dbFilePath);
+    }
+}
 
-//register services
+// Register services
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddCors(options =>
@@ -22,14 +29,12 @@ builder.Services.AddCors(options =>
     );
 });
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(connectionString));
-
-// Add services for Razor Pages
 builder.Services.AddRazorPages();
 
-//Build App
+// Build app
 var app = builder.Build();
 
-//migrate db
+// Migrate db
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -37,19 +42,21 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.EnsureCreated();
 }
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
+{
     app.MapOpenApi();
+}
 app.UseHttpsRedirection();
-app.UseStaticFiles(); // Serve static files
+app.UseStaticFiles();
 app.UseRouting();
 app.UseCors(cors => cors.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin => true).AllowCredentials());
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
     endpoints.MapRazorPages();
-    endpoints.MapFallbackToFile("index.html"); // Fallback to Blazor WebAssembly app
+    endpoints.MapFallbackToFile("index.html");
 });
 
-//run app
+// Run app
 app.Run();

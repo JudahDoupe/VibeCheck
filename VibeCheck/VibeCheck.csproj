@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <OutputPath>..\VibeCheckServer\wwroot</OutputPath>
+        <OutputPath>..\VibeCheckServer\wwwroot</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,17 +17,17 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Components\FeelingsWheel.razor.css">
-        <DependentUpon>FeelingsWheel.razor.razor</DependentUpon>
-      </None>
+        <None Update="Components\FeelingsWheel.razor.css">
+            <DependentUpon>FeelingsWheel.razor.razor</DependentUpon>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Update="Components\FeelingsWheel.razor.css" />
+        <Content Update="Components\FeelingsWheel.razor.css" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\VibeCheckModel\VibeCheckModel.csproj" />
+        <ProjectReference Include="..\VibeCheckModel\VibeCheckModel.csproj" />
     </ItemGroup>
 
 </Project>
